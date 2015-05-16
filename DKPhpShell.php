@@ -13,6 +13,7 @@ class DKPhpShell {
     const   LF_WINDOWS = "\r\n";
 
     private $lineFeed = self::LF_PHP;
+    private $maxInputTimes = 5; //how many times should we ask for valid input (if needed)
 
     function __construct($defaultLineFeed=self::LF_PHP){
         if($defaultLineFeed != $this->lineFeed){
@@ -39,6 +40,27 @@ class DKPhpShell {
      */
     public function setLineFeedToDefault(){
         $this->lineFeed = self::LF_PHP;
+    }
+
+    /**
+     * set the maximum number of times to ask for an answer if none is provided or an invalid answer was given
+     * @param $number
+     * @return bool
+     */
+    public function setMaxInputTimes($number){
+        if(!is_numeric($number)){
+            return false;
+        }
+
+        $this->maxInputTimes = $number;
+    }
+
+    /**
+     * get the current max number of times the shell asks for answer if none is provided or an invalid answer was given
+     * @return int
+     */
+    public function getMaxInputTimes(){
+        return $this->maxInputTimes;
     }
 
     /**
@@ -94,7 +116,8 @@ class DKPhpShell {
     }
 
     /**
-     * write multiple lines at once from a provided array
+     * write multiple lines to screen at once from a provided array of lines
+     * you can add a border to this entire block so it looks similar to the writeMessageBlock function
      * @param array $lines
      * @param bool $border
      * @return void
@@ -162,7 +185,7 @@ class DKPhpShell {
         while($answer == ''){
             $answer = $this->askInput($question,array(),$defaultAnswer,false);
             $countTimes++;
-            if($countTimes >= 5){
+            if($countTimes >= $this->maxInputTimes){
                 $error = true;
                 break;
             }
