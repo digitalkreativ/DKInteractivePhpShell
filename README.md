@@ -25,4 +25,8 @@ Then you can start using the class, i.e. confirm message
     if(!$answer){
         $dkShell->writeErrorMessage('failed to answer one of the answers, can not continue');
         exit();
+    }elseif($answer == 'yes'){
+        $dkShell->writeMessage('Phew!');
+    }else{
+        $dkShell->writeMessage('I am only allowed to interact with humans ...');
     }
