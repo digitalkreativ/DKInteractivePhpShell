@@ -30,3 +30,4 @@ Then you can start using the class, i.e. confirm message
     }else{
         $dkShell->writeMessage('I am only allowed to interact with humans ...');
     }
+
